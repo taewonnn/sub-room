@@ -1,4 +1,4 @@
-import { supabase } from './client';
+import { supabase } from './index';
 
 export async function getCurrentUser() {
   const {
