@@ -11,3 +11,25 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
+
+
+export const testConnection = async () => {
+  try {
+    const { data, error } = await supabase.from("subscriptions").select("count").limit(1);
+    if(error) {
+      console.error("Failed to fetch subscriptions:", error);
+      return false;
+    }
+    console.log("data", data);
+    console.log("✅ Supabase 연결 성공!");
+    console.log("URL:", supabaseUrl);
+    return true;
+
+  }catch(err) {
+    console.error("❌ Supabase 연결 오류:", err);
+    return false;
+  }
+}
+
+
+
