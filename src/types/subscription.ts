@@ -1,8 +1,8 @@
 // 결제 주기
-export type BillingCycle = "monthly" | "yearly" | "one-time";
+export type BillingCycle = 'monthly' | 'yearly' | 'one-time';
 
 // 카테고리
-export type SubscriptionCategory = "OTT" | "VPN" | "COURSE" | "OTHER";
+export type SubscriptionCategory = 'OTT' | 'VPN' | 'COURSE' | 'OTHER';
 
 export interface Subscription {
   id: string; // ID
@@ -18,7 +18,6 @@ export interface Subscription {
   created_at: string; // 생성 날짜
   updated_at: string; // 수정 날짜
 }
-
 
 export interface SubscriptionInsert {
   name: string;
