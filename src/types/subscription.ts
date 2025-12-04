@@ -1,5 +1,5 @@
 // 결제 주기
-export type BillingCycle = 'monthly' | 'yearly' | 'one-time';
+export type BillingCycle = 'MONTHLY' | 'YEARLY' | 'WEEKLY' | 'ONE_TIME';
 
 // 카테고리
 export type SubscriptionCategory = 'OTT' | 'VPN' | 'COURSE' | 'OTHER';
