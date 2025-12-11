@@ -102,6 +102,12 @@ export default function SignInPage() {
                 회원가입
               </button>
             </div>
+            <div className="text-center text-sm text-muted-foreground">
+              비밀번호를 잊으셨나요?{' '}
+              <button type="button" onClick={() => router.push('/signin/reset')} className="text-primary hover:underline">
+                비밀번호를 잊으셨나요?
+              </button>
+            </div>
           </form>
         </CardContent>
       </Card>
