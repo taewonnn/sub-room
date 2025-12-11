@@ -4,25 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import type { Subscription } from '@/types/subscription';
 import { CreditCard, Film, Shield, BookOpen, Package } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { formatPrice, calculateAnnualCost, billingCycleLabels, categoryColors } from '@/lib/subscription/utils';
 
 interface SubscriptionCardProps {
   subscription: Subscription;
   onClick?: () => void;
 }
-
-const billingCycleLabels = {
-  MONTHLY: '월간',
-  YEARLY: '연간',
-  WEEKLY: '주간',
-  ONE_TIME: '일회성',
-};
-
-const categoryColors = {
-  OTT: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
-  VPN: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
-  COURSE: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
-  OTHER: 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200',
-};
 
 const categoryIcons = {
   OTT: Film,
@@ -39,37 +27,27 @@ const categoryGradients = {
 };
 
 export default function SubscriptionCard({ subscription, onClick }: SubscriptionCardProps) {
-  const formatPrice = (price: number, currency: string) => {
-    return new Intl.NumberFormat('ko-KR', {
-      style: 'currency',
-      currency: currency || 'KRW',
-    }).format(price);
-  };
+  const router = useRouter();
 
-  const calculateAnnualCost = () => {
-    if (subscription.billing_cycle === 'ONE_TIME') {
-      return null;
-    }
-    if (subscription.billing_cycle === 'YEARLY') {
-      return subscription.price;
-    } else if (subscription.billing_cycle === 'MONTHLY') {
-      return subscription.price * 12;
-    } else if (subscription.billing_cycle === 'WEEKLY') {
-      return subscription.price * 52;
-    }
-    return null;
-  };
-
-  const annualCost = calculateAnnualCost();
+  // 로컬 함수 제거하고 공통 함수 사용
+  const annualCost = calculateAnnualCost(subscription);
   const CategoryIcon = subscription.category ? categoryIcons[subscription.category] : Package;
   const gradient = subscription.category ? categoryGradients[subscription.category] : categoryGradients.OTHER;
+
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    } else {
+      router.push(`/subscriptions/${subscription.id}`);
+    }
+  };
 
   return (
     <Card
       className={`group cursor-pointer transition-all hover:shadow-lg hover:scale-[1.02] border-2 ${
         !subscription.is_active ? 'opacity-60' : ''
       } ${subscription.category ? `bg-linear-to-br ${gradient}` : ''}`}
-      onClick={onClick}
+      onClick={handleClick}
     >
       <CardHeader>
         <div className="flex items-start justify-between gap-3">
