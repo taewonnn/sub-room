@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { getServerUser } from '@/lib/supabase/server/auth';
 import { getServerSubscriptionById } from '@/lib/supabase/server/subscriptions';
 import Header from '../../_components/Header';
-import SubscriptionDetail from './_components/SubscriptionDetail';
+import SubscriptionDetail from '@/components/subscription/SubscriptionDetail';
 
 interface PageProps {
   params: Promise<{ id: string[] }>;
